@@ -245,7 +245,22 @@ const HOADONDN = 15;
 const DICHVUDN = 75;
 const CAOCAPDN = 50;
 
+function tongTien(hoaDon, dichVu, caoCap, kenhCC) {
+    var result = hoaDon + dichVu + caoCap * kenhCC;
+    return result;
+}
 
+function tongTienDN(hoaDon, dichVu, caoCap, kenhCC, soKN) {
+    var result = 0;
+    if (soKN > 0 && soKN <= 10) {
+        result = hoaDon + dichVu + caoCap * kenhCC;
+    } else if (soKN > 10) {
+        result = hoaDon + dichVu + 5 * (soKN - 10) + caoCap * kenhCC;
+    } else {
+        alert("Vui lòng nhập số kết nối!");
+    }
+    return result;
+}
 
 document.getElementById("btnResult3").onclick = function () {
     var customer = document.getElementById("customer").value;
@@ -253,22 +268,25 @@ document.getElementById("btnResult3").onclick = function () {
     var kenhCC = document.getElementById("kenhCC").value * 1;
     var soKN = document.getElementById("soKN").value * 1;
     var sum = 0;
+    var result = "";
 
     switch (customer) {
         case "ND":
-            sum = HOADONND + DICHVUND + CAOCAPND * kenhCC;
+            sum = tongTien(HOADONND, DICHVUND, CAOCAPND, kenhCC);
             break;
         case "DN":
-            if (soKN > 0 && soKN <= 10) {
-                sum = HOADONDN + DICHVUDN + CAOCAPDN * kenhCC;
-            } else if (soKN > 10) {
-                sum = HOADONDN + DICHVUDN + 5 * (soKN - 10) + CAOCAPDN * kenhCC;
-            }
+            sum = tongTienDN(HOADONDN, DICHVUDN, CAOCAPDN, kenhCC, soKN);
             break;
-
         default:
             break;
     }
-    console.log(sum);
+
+    result += "<p>Mã khách hàng: ";
+    result += maKH;
+    result += ". Tiền cáp: ";
+    result += sum;
+
+    document.getElementById("infoResult3").innerHTML = result;
+    document.getElementById("infoResult3").classList.add("alert-success");
 
 }
